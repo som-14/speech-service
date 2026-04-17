@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Azure Speech Studio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Splash / Background Art -->
+  <div class="splash-art" aria-hidden="true">
+    <svg class="splash-svg" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow1" cx="30%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#5eead4" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="glow2" cx="75%" cy="65%" r="50%">
+          <stop offset="0%" stop-color="#818cf8" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="glow3" cx="60%" cy="10%" r="40%">
+          <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="900" height="600" fill="#0a0f1e"/>
+      <rect width="900" height="600" fill="url(#glow1)"/>
+      <rect width="900" height="600" fill="url(#glow2)"/>
+      <rect width="900" height="600" fill="url(#glow3)"/>
+
+      <!-- Waveform decorative lines -->
+      <g class="wave-group" opacity="0.25">
+        <path d="M0 300 Q112 240 225 300 Q337 360 450 300 Q562 240 675 300 Q787 360 900 300" fill="none" stroke="#5eead4" stroke-width="1.5"/>
+        <path d="M0 315 Q112 255 225 315 Q337 375 450 315 Q562 255 675 315 Q787 375 900 315" fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.5"/>
+        <path d="M0 285 Q112 225 225 285 Q337 345 450 285 Q562 225 675 285 Q787 345 900 285" fill="none" stroke="#5eead4" stroke-width="0.8" opacity="0.5"/>
+      </g>
+
+      <!-- Floating circles -->
+      <circle cx="80"  cy="80"  r="60" fill="none" stroke="#818cf8" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="80"  cy="80"  r="40" fill="none" stroke="#818cf8" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="820" cy="520" r="90" fill="none" stroke="#38bdf8" stroke-width="0.5" opacity="0.25"/>
+      <circle cx="820" cy="520" r="60" fill="none" stroke="#38bdf8" stroke-width="0.5" opacity="0.15"/>
+      <circle cx="450" cy="550" r="45" fill="none" stroke="#5eead4" stroke-width="0.5" opacity="0.2"/>
+
+      <!-- Dot grid -->
+      <g opacity="0.07">
+        <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1" fill="#94a3b8"/>
+        </pattern>
+        <rect width="900" height="600" fill="url(#dots)"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">Azure Speech Studio</span>
+      </div>
+      <p class="tagline">Text-to-Speech &amp; Speech-to-Text — powered by Azure Cognitive Services</p>
+    </header>
+
+    <!-- Config Panel -->
+    <section class="card config-card" id="config-section">
+      <h2 class="card-title">API Configuration</h2>
+      <div class="config-row">
+        <div class="input-group">
+          <label for="api-key">API Key</label>
+          <input type="password" id="api-key" placeholder="Paste your Azure Speech API key…" autocomplete="off"/>
+          <button class="toggle-vis" onclick="toggleVisibility('api-key', this)" title="Show/Hide">👁</button>
+        </div>
+        <div class="input-group">
+          <label for="region">Region</label>
+          <input type="text" id="region" placeholder="e.g. eastus, westeurope…" autocomplete="off"/>
+        </div>
+      </div>
+      <p class="config-hint">Your credentials are never stored or sent anywhere except Azure.</p>
+    </section>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-tab="tts">Text → Speech</button>
+      <button class="tab" data-tab="stt">Speech → Text</button>
+    </div>
+
+    <!-- TTS Panel -->
+    <section class="card tab-panel active" id="tab-tts">
+      <h2 class="card-title">Text to Speech</h2>
+
+      <div class="tts-controls">
+        <div class="input-group">
+          <label for="tts-voice">Voice</label>
+          <select id="tts-voice">
+            <option value="en-US-JennyNeural">Jenny (en-US, Female)</option>
+            <option value="en-US-GuyNeural">Guy (en-US, Male)</option>
+            <option value="en-GB-SoniaNeural">Sonia (en-GB, Female)</option>
+            <option value="en-GB-RyanNeural">Ryan (en-GB, Male)</option>
+            <option value="en-AU-NatashaNeural">Natasha (en-AU, Female)</option>
+            <option value="en-IN-NeerjaNeural">Neerja (en-IN, Female)</option>
+            <option value="hi-IN-SwaraNeural">Swara (hi-IN, Female)</option>
+            <option value="hi-IN-MadhurNeural">Madhur (hi-IN, Male)</option>
+            <option value="fr-FR-DeniseNeural">Denise (fr-FR, Female)</option>
+            <option value="de-DE-KatjaNeural">Katja (de-DE, Female)</option>
+            <option value="es-ES-ElviraNeural">Elvira (es-ES, Female)</option>
+            <option value="ja-JP-NanamiNeural">Nanami (ja-JP, Female)</option>
+            <option value="zh-CN-XiaoxiaoNeural">Xiaoxiao (zh-CN, Female)</option>
+          </select>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-group">
+            <label>Rate <span id="rate-val">0%</span></label>
+            <input type="range" id="tts-rate" min="-50" max="100" value="0"
+              oninput="document.getElementById('rate-val').textContent=this.value+'%'"/>
+          </div>
+          <div class="slider-group">
+            <label>Pitch <span id="pitch-val">0%</span></label>
+            <input type="range" id="tts-pitch" min="-50" max="50" value="0"
+              oninput="document.getElementById('pitch-val').textContent=this.value+'%'"/>
+          </div>
+        </div>
+      </div>
+
+      <textarea id="tts-text" placeholder="Enter text to synthesize…" rows="5"></textarea>
+
+      <div class="action-row">
+        <button class="btn-primary" id="tts-btn" onclick="synthesizeSpeech()">
+          <span class="btn-icon">▶</span> Synthesize
+        </button>
+        <button class="btn-ghost" id="tts-download" style="display:none" onclick="downloadAudio()">
+          ↓ Download
+        </button>
+      </div>
+
+      <div id="tts-audio-wrap" style="display:none">
+        <audio id="tts-audio" controls></audio>
+      </div>
+
+      <div id="tts-status" class="status-msg"></div>
+    </section>
+
+    <!-- STT Panel -->
+    <section class="card tab-panel" id="tab-stt">
+      <h2 class="card-title">Speech to Text</h2>
+
+      <div class="stt-controls">
+        <div class="input-group">
+          <label for="stt-lang">Language</label>
+          <select id="stt-lang">
+            <option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="en-IN">English (India)</option>
+            <option value="hi-IN">Hindi (India)</option>
+            <option value="fr-FR">French</option>
+            <option value="de-DE">German</option>
+            <option value="es-ES">Spanish (Spain)</option>
+            <option value="ja-JP">Japanese</option>
+            <option value="zh-CN">Chinese (Simplified)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mic-area">
+        <button class="mic-btn" id="mic-btn" onclick="toggleRecording()">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="9" y="2" width="6" height="12" rx="3"/>
+            <path d="M5 10a7 7 0 0014 0M12 19v3M9 22h6"/>
+          </svg>
+          <span id="mic-label">Start Recording</span>
+        </button>
+        <div class="mic-wave" id="mic-wave" style="display:none">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="upload-area">
+        <label class="upload-label" for="audio-file">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+          </svg>
+          Upload Audio File
+        </label>
+        <input type="file" id="audio-file" accept=".wav,.mp3,.ogg,.flac,.m4a" onchange="transcribeFile(this)"/>
+        <span id="file-name" class="file-hint">WAV, MP3, OGG, FLAC, M4A</span>
+      </div>
+
+      <div class="result-box" id="stt-result">
+        <p class="result-placeholder">Transcript will appear here…</p>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-ghost" onclick="copyTranscript()">⎘ Copy</button>
+        <button class="btn-ghost" onclick="clearTranscript()">✕ Clear</button>
+      </div>
+
+      <div id="stt-status" class="status-msg"></div>
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
