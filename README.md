@@ -48,7 +48,7 @@ git clone https://github.com/your-username/speech-service.git
 
 ## 🌐 Live Demo
 
-👉 https://your-username.github.io/speech-service/
+👉 som-14.github.io/speech-service/
 
 ---
 
