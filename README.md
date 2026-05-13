@@ -39,7 +39,7 @@ speech-service/
 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/speech-service.git
+git clone https://github.com/som-14/speech-service.git
 ```
 
 2. Open `index.html` in your browser
